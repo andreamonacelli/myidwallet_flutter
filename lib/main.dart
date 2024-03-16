@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:myidwallet_flutter/widgets/homepage.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,14 +13,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
-      child: MaterialApp(
-        title: 'Namer App',
+      create: (context) => MyAppState(), /* App-wide state defined in the specified class */
+      child: MaterialApp( /* Setup of the whole application */
+        title: 'My ID Wallet',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
         ),
-        home: MyHomePage(),
+        home: MyHomePage(), /* Defined the widget that will actually hold the homepage */
       ),
     );
   }
@@ -27,20 +28,4 @@ class MyApp extends StatelessWidget {
 
 class MyAppState extends ChangeNotifier {
   var current = WordPair.random();
-}
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-
-    return Scaffold(
-      body: Column(
-        children: [
-          Text('A random idea:'),
-          Text(appState.current.asLowerCase),
-        ],
-      ),
-    );
-  }
 }
