@@ -15,6 +15,8 @@ class WelcomeCard extends StatelessWidget{
   Widget build(BuildContext context) {
     return Card(
       color: Colors.cyan,
+      elevation: 2,
+      margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
       child: Padding(
         padding: EdgeInsets.all(5),
         child: Text(

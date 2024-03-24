@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
         ),
-        home: MyHomePage(), /* Defined the widget that will actually hold the homepage */
+        home: HomePage(), /* Defined the widget that will actually hold the homepage */
       ),
     );
   }

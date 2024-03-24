@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="myidwallet_flutter"
+        android:label="My ID Wallet"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

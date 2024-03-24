@@ -1,25 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:myidwallet_flutter/widgets/homepage/welcome-card.dart';
-import 'package:provider/provider.dart';
-import 'package:myidwallet_flutter/main.dart';
+import 'package:myidwallet_flutter/widgets/homepage/documents_grid.dart';
+import 'package:myidwallet_flutter/widgets/homepage/welcome_card.dart';
 
 /// Definition of the homepage UI structure
-class MyHomePage extends StatelessWidget {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
 
     return Scaffold(
-      body: Column(
-        children: [
-          WelcomeCard('Benvenuto nel tuo wallet!'),
-          Text(appState.current.asLowerCase),
-        ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/homepage_bg.png"),
+            fit: BoxFit.fill,
+          )
+        ),
+        child: Column(
+          children: [
+            WelcomeCard("Benvenuto nel tuo wallet!"),
+            DocumentsGrid(),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Aggiungi nuovo documento',
+        shape: CircleBorder(),
+        backgroundColor: Colors.cyan,
         onPressed: () => print('FloatingActionButton pressed'), /// To be changed as soon as the adding mechanism will be implemented
-        child: const Icon(Icons.add, size: 18)
+        child: const Icon(Icons.add, size: 35, color: Colors.white70)
       ),
     );
   }
