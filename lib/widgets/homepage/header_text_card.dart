@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 ///Definition of the UI section corresponding to the welcome card
 class HeaderTextCard extends StatelessWidget{
@@ -25,12 +27,12 @@ class HeaderTextCard extends StatelessWidget{
       ),
       padding: EdgeInsets.all(10),
       child: Text(
-        _headerString,
-        style: TextStyle(
-          color: Colors.white70,
-          fontSize: 20,
-          fontWeight: FontWeight.bold
-        ),
+          _headerString,
+          style: TextStyle(
+              color: Colors.white70,
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+          ),
       ),
     );
   }
