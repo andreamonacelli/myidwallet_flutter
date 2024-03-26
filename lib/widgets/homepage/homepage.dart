@@ -8,22 +8,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/homepage_bg.png"),
-            fit: BoxFit.fill,
-          )
-        ),
-        child: Column(
-          children: [
-            HeaderTextCard("Benvenuto nel tuo wallet!"),
-            DocumentsGrid(),
-          ],
-        ),
-      ),
+      body: Column(
+            children: [
+              HeaderTextCard("Benvenuto nel tuo wallet!"),
+              DocumentsGrid(),
+            ],
+          ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Aggiungi nuovo documento',
         shape: CircleBorder(),
