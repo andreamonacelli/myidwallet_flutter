@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myidwallet_flutter/widgets/homepage/documents_grid.dart';
-import 'package:myidwallet_flutter/widgets/homepage/welcome_card.dart';
+import 'package:myidwallet_flutter/widgets/homepage/header_text_card.dart';
 
 /// Definition of the homepage UI structure
 class HomePage extends StatelessWidget {
@@ -9,6 +9,8 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/homepage_bg.png"),
@@ -17,7 +19,7 @@ class HomePage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            WelcomeCard("Benvenuto nel tuo wallet!"),
+            HeaderTextCard("Benvenuto nel tuo wallet!"),
             DocumentsGrid(),
           ],
         ),
