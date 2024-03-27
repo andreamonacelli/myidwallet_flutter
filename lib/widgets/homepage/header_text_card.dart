@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 ///Definition of the UI section corresponding to the welcome card
 class HeaderTextCard extends StatelessWidget{
