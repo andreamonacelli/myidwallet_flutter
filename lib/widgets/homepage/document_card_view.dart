@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:myidwallet_flutter/models/entities/document.dart';
 import 'package:myidwallet_flutter/models/entities/document_type.dart';

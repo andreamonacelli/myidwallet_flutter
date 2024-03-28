@@ -1,5 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:myidwallet_flutter/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:myidwallet_flutter/routes/homepage.dart';
 
@@ -13,14 +14,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => MyAppState(), /* App-wide state defined in the specified class */
-      child: MaterialApp( /* Setup of the whole application */
+      create: (context) => MyAppState(),
+      child: MaterialApp(
         title: 'My ID Wallet',
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
         ),
-        home: HomePage(), /* Defined the widget that will actually hold the homepage */
+        initialRoute: RoutesManager.HOMEPAGE_ROUTE,
+        onGenerateRoute: RoutesManager.generateRoute,
       ),
     );
   }
