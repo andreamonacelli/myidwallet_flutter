@@ -2,7 +2,6 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:myidwallet_flutter/routes.dart';
 import 'package:provider/provider.dart';
-import 'package:myidwallet_flutter/routes/homepage.dart';
 
 void main() {
   runApp(MyApp());

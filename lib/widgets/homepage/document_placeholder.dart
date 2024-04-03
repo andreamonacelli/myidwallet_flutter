@@ -17,11 +17,11 @@ class DocumentPlaceholder extends StatelessWidget {
         ),
         child: ListTile(
           leading: Image(
-            image: AssetImage("assets/images/${_documentDisplayed.placeholderBGImage}"),
+            image: AssetImage("assets/images/${_documentDisplayed.placeholderBGImage}.png"),
             fit: BoxFit.fill,
           ),
           title: Text(
-            "${_documentDisplayed.documentHolderName}",
+            _documentDisplayed.documentHolderName,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16
