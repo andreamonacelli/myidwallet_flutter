@@ -47,5 +47,7 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+    <string>Device camera is needed in order to scan the new documents that the user wants to add</string>
 </dict>
 </plist>

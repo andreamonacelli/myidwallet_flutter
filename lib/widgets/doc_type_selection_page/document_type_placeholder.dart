@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myidwallet_flutter/routes.dart';
 
 class DocumentTypePlaceholder extends StatelessWidget {
 
@@ -12,7 +13,10 @@ class DocumentTypePlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => print("${_docTypeDescription[_fileNameIndex]} placeholder has been tapped"),
+      onTap: () {
+        print("${_docTypeDescription[_fileNameIndex]} placeholder has been tapped");
+        Navigator.of(context).pushNamed(RoutesManager.cameraScreenRoute);
+      },
       child: Card(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25)

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myidwallet_flutter/models/entities/document.dart';
+import 'package:myidwallet_flutter/routes.dart';
 
 class DocumentPlaceholder extends StatelessWidget {
 
@@ -10,7 +11,9 @@ class DocumentPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => print("${_documentDisplayed.documentHolderName} document placeholder has been tapped"),
+      onTap: () {
+        print("${_documentDisplayed.documentHolderName} document placeholder has been tapped");
+      },
       child: Card(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25)
