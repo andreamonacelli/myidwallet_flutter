@@ -12,6 +12,7 @@ class Document {
   late DateTime _dateOfIssue;
   late Map<String, String> _additionalData;
   late DocumentType _documentType;
+  late String _placeholderBGImage;
   //documentScan
 
   ///Constructors
@@ -84,7 +85,12 @@ class Document {
     _documentGUID = value;
   }
 
-//implement getRecognizerTextResult
+  String get placeholderBGImage => _placeholderBGImage;
 
+  set placeholderBGImage(String value) {
+    _placeholderBGImage = value;
+  }
+
+//implement getRecognizerTextResult
 
 }
