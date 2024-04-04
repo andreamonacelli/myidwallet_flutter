@@ -14,54 +14,61 @@ class CheckImagePage extends StatelessWidget{
     return Scaffold(
       body: Column(
         children: [
-          Image.file(File(_imagePath)),
-          Form(
-            key: _holderNameForm,
-            child: TextFormField(
-              decoration: InputDecoration(
-                hintText: "Nome dell'intestatario"
-              ),
-              validator: (String? holderName) {
-                if(holderName == null || holderName.isEmpty){
-                  return "Per favore inserire il nome dell'intestatario";
-                }
-                return null;
-              },
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 1.8,
+            color: Colors.white70,
+            child: Image.file(File(_imagePath))
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(5, 5, 5, 0),
+            child: Form(
+              key: _holderNameForm,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Nome dell'intestatario"
+                ),
+                validator: (String? holderName) {
+                  if(holderName == null || holderName.isEmpty){
+                    return "Per favore inserire il nome dell'intestatario";
+                  }
+                  return null;
+                },
+              )
             )
           ),
-          FloatingActionButton.extended(
-              label: Card(
-                  shape: CircleBorder(),
-                  color: Colors.grey,
-                  child: Text(
+          Container(
+            margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+            child: FloatingActionButton.extended(
+              backgroundColor: Colors.grey,
+              label: Text(
                     "Scatta di nuovo la foto",
                     style: TextStyle(
+                      backgroundColor: Colors.grey,
                       fontSize: 12,
                       color: Colors.black54
                     ),
                 ),
-              ),
               onPressed: () {
                 Navigator.of(context).pushNamed(RoutesManager.cameraScreenRoute);
               }
+            )
           )
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        label: Card(
-          shape: CircleBorder(),
-          color: Colors.green,
-          child: Text(
+        backgroundColor: Colors.green,
+        label: Text(
             "Aggiungi",
             style: TextStyle(
+                backgroundColor: Colors.green,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: Colors.black54
+                color: Colors.white70
             ),
-          ),
         ),
         onPressed: () {
-          ///Add the data processing snippet
+          ///TODO: Add the data processing snippet
           Navigator.of(context).pushNamed(RoutesManager.homepageRoute);
         },
       ),

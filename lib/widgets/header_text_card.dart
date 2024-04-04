@@ -23,7 +23,8 @@ class HeaderTextCard extends StatelessWidget{
           borderRadius: BorderRadius.circular(25),
         ),
       ),
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+      alignment: Alignment.centerLeft,
       child: Text(
           _headerString,
           style: TextStyle(
