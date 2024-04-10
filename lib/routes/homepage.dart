@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Column(
             children: [
-              HeaderTextCard("Benvenuto nel tuo wallet!"),
+              HeaderTextCard("Benvenuto nel tuo wallet!", Colors.cyan, Colors.white70),
               DocumentsGrid(),
             ],
           ),

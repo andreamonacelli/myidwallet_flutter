@@ -13,7 +13,7 @@ class DocTypeSelectionPage extends StatelessWidget{
     return Scaffold(
       body: Column(
         children: [
-          HeaderTextCard(_headerString),
+          HeaderTextCard(_headerString, Colors.cyan, Colors.white70),
           DocumentPlaceholdersList(),
         ],
       )

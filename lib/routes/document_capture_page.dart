@@ -1,21 +1,22 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:myidwallet_flutter/widgets/camera_controller/check_image_page.dart';
+import 'package:myidwallet_flutter/widgets/header_text_card.dart';
 
-class CaptureDocumentImage extends StatefulWidget{
+class DocumentCapturePage extends StatefulWidget{
 
   final CameraDescription camera;
 
-  CaptureDocumentImage({
+  DocumentCapturePage({
     super.key,
     required this.camera,
   });
 
   @override
-  CaptureDocumentImageState createState() => CaptureDocumentImageState();
+  DocumentCapturePageState createState() => DocumentCapturePageState();
 }
 
-class CaptureDocumentImageState extends State<CaptureDocumentImage> {
+class DocumentCapturePageState extends State<DocumentCapturePage> {
 
   late CameraController _cameraController;
   late Future<void> _initializeCameraControllerFuture;
@@ -39,12 +40,16 @@ class CaptureDocumentImageState extends State<CaptureDocumentImage> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: AppBar(title: const Text("Scansiona il documento:")),
       body: FutureBuilder<void>(
         future: _initializeCameraControllerFuture,
         builder: (context, snapshot) {
           if(snapshot.connectionState == ConnectionState.done){
-            return CameraPreview(_cameraController);
+            return Column(
+              children: [
+                HeaderTextCard("Scansiona il documento:", Colors.grey, Colors.black87),
+                CameraPreview(_cameraController),
+              ],
+            );
           } else {
             return const Center(child: CircularProgressIndicator());
           }
@@ -68,6 +73,7 @@ class CaptureDocumentImageState extends State<CaptureDocumentImage> {
         },
         child: const Icon(Icons.camera_alt),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
   

@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 class HeaderTextCard extends StatelessWidget{
 
   final String _headerString;
+  final Color _backgroundColor;
+  final Color _textColor;
 
-  HeaderTextCard(this._headerString);
+  HeaderTextCard(this._headerString, this._backgroundColor, this._textColor);
 
   ///Default constructor (named), if it will turn out to be useless then it will be removed
   HeaderTextCard.standard():
-      _headerString = 'Benvenuto nel tuo wallet!';
+      _headerString = 'Benvenuto nel tuo wallet!',
+      _backgroundColor = Colors.cyan,
+      _textColor = Colors.white70;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +22,7 @@ class HeaderTextCard extends StatelessWidget{
       height: MediaQuery.of(context).size.height / 13,
       margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
       decoration: ShapeDecoration(
-        color: Colors.cyan,
+        color: _backgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25),
         ),
@@ -28,7 +32,7 @@ class HeaderTextCard extends StatelessWidget{
       child: Text(
           _headerString,
           style: TextStyle(
-              color: Colors.white70,
+              color: _textColor,
               fontSize: 20,
               fontWeight: FontWeight.bold
           ),
