@@ -6,9 +6,11 @@ class CheckImagePage extends StatelessWidget{
 
   late final String _imagePath;
   final GlobalKey<FormState> _holderNameForm = GlobalKey<FormState>();
+  final double _imageSectionHeightRatio = 1.8;
 
   CheckImagePage(this._imagePath);
 
+  ///TODO: Refactor widget's structure based on the draft obtained from the Figma-to-Code plugin (adjusting responsiveness and replacing containers with respective widgets)
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,8 +18,9 @@ class CheckImagePage extends StatelessWidget{
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 1.8,
+            height: MediaQuery.of(context).size.height / _imageSectionHeightRatio,
             color: Colors.white70,
+            alignment: Alignment.center,
             child: Image.file(File(_imagePath))
           ),
           Container(
