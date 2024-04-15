@@ -47,7 +47,9 @@ class DocumentCapturePageState extends State<DocumentCapturePage> {
             return Column(
               children: [
                 HeaderTextCard("Scansiona il documento:", Colors.grey, Colors.black87),
-                CameraPreview(_cameraController),
+                Expanded(
+                  child: CameraPreview(_cameraController)
+                )
               ],
             );
           } else {

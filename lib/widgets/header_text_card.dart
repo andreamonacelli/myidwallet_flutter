@@ -20,7 +20,7 @@ class HeaderTextCard extends StatelessWidget{
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height / 13,
-      margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
+      margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
       decoration: ShapeDecoration(
         color: _backgroundColor,
         shape: RoundedRectangleBorder(
