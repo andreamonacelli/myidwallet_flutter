@@ -10,7 +10,6 @@ class CheckImagePage extends StatelessWidget{
 
   CheckImagePage(this._imagePath);
 
-  ///TODO: Refactor widget's structure based on the draft obtained from the Figma-to-Code plugin (adjusting responsiveness and replacing containers with respective widgets)
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,3 +1,8 @@
+import 'package:myidwallet_flutter/models/entities/driving_license.dart';
+import 'package:myidwallet_flutter/models/entities/healthcare_insurance.dart';
+import 'package:myidwallet_flutter/models/entities/passport.dart';
+import 'package:myidwallet_flutter/models/entities/personal_id.dart';
+
 import 'document_type.dart';
 
 ///Definition of the document entity (based on its transposition from the DB structure)
@@ -11,12 +16,24 @@ class Document {
   late DateTime _expiryDate;
   late DateTime _dateOfIssue;
   late Map<String, String> _additionalData;
-  late DocumentType _documentType;
+  DocumentType? _documentType;
   late String _placeholderBGImage;
-  //documentScan
 
   ///Constructors
   Document(this._documentHolderName, this._documentNation);
+  Document.setAll(
+      this._documentGUID,
+      this._documentHolderName,
+      this._documentTypeDescr,
+      this._documentNation,
+      this._uniqueCode,
+      this._expiryDate,
+      this._dateOfIssue,
+      this._additionalData
+  ){
+    _documentType = _parseTypeFromDescription();
+    _placeholderBGImage = "assets/images/${_documentTypeDescr}_$_documentNation.png";
+  }
 
   ///Methods
   void fillData(){
@@ -31,9 +48,36 @@ class Document {
     throw UnimplementedError();
   }
 
-  DocumentType get documentType => _documentType;
+  Map<String, Object?> toMap(){
+    return {
+      'id': _documentGUID,
+      'holderName' : _documentHolderName,
+      'type': _documentTypeDescr,
+      'nation': _documentNation,
+      'uniqueCode': _uniqueCode,
+      'expiryDate': _expiryDate.toIso8601String(),
+      'issueDate': _dateOfIssue.toIso8601String(),
+      'additionalData': _additionalData
+    };
+  }
 
-  set documentType(DocumentType value) {
+  DocumentType _parseTypeFromDescription(){
+    switch(_documentTypeDescr){
+      case 'healthcare':
+        return HealthcareInsurance();
+      case 'drlicense':
+        return DrivingLicense();
+      case 'passport':
+        return Passport();
+      case 'personalid':
+        return PersonalID();
+      default: return HealthcareInsurance();
+    }
+  }
+
+  DocumentType? get documentType => _documentType;
+
+  set documentType(DocumentType? value) {
     _documentType = value;
   }
 
@@ -90,7 +134,5 @@ class Document {
   set placeholderBGImage(String value) {
     _placeholderBGImage = value;
   }
-
-//implement getRecognizerTextResult
 
 }

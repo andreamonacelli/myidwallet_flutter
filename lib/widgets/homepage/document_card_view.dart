@@ -12,7 +12,7 @@ class DocumentCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String backgroundImageResource = _parseCardBackgroundImage();
+    String backgroundImageResource = _boundDocument.placeholderBGImage;
     return Container(
       width: MediaQuery.of(context).size.width / 2,
       height: MediaQuery.of(context).size.height / 4,
@@ -37,7 +37,7 @@ class DocumentCardView extends StatelessWidget {
   }
 
   String _parseCardBackgroundImage(){
-    DocumentType docType = _boundDocument.documentType;
+    DocumentType? docType = _boundDocument.documentType;
     String backgroundResString = "";
     if(docType is HealthcareInsurance){
       backgroundResString += "healthcare";

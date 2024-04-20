@@ -1,12 +1,23 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:myidwallet_flutter/models/dbmanager/dbmanager.dart';
 import 'package:myidwallet_flutter/routes.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
+import 'package:sqflite/sqflite.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  ///Initializing Camera
   final cameras = await availableCameras();
   MyIDWalletAppState.selectedCamera = cameras.first;
+  ///Initializing database
+  DBManager.database = await openDatabase(
+    join(await getDatabasesPath(), 'myidwallet_database.db'),
+    onCreate: DBManager.onDBCreate(),
+    version: 1
+  );
+  ///Run the application once all the setup operations are completed
   runApp(MyIDWalletApp());
 }
 
