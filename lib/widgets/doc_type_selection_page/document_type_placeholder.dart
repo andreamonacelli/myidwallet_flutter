@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myidwallet_flutter/routes.dart';
+import 'package:myidwallet_flutter/routes/doc_type_selection_page.dart';
 
 class DocumentTypePlaceholder extends StatelessWidget {
 
@@ -14,7 +15,9 @@ class DocumentTypePlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("${_docTypeDescription[_fileNameIndex]} placeholder has been tapped");
+        /* LOG */print("${_docTypeDescription[_fileNameIndex]} placeholder has been tapped");
+        DocTypeSelectionPage.selectedType = _docTypeDescription[_documentTypeTitle];
+        DocTypeSelectionPage.selectedNation = _docTypeDescription[_documentTypeNation];
         Navigator.of(context).pushNamed(RoutesManager.cameraScreenRoute);
       },
       child: Card(

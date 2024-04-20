@@ -8,15 +8,11 @@ import 'package:sqflite/sqflite.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  ///Initializing database
+  await DBManager.initializeDatabase();
   ///Initializing Camera
   final cameras = await availableCameras();
   MyIDWalletAppState.selectedCamera = cameras.first;
-  ///Initializing database
-  DBManager.database = await openDatabase(
-    join(await getDatabasesPath(), 'myidwallet_database.db'),
-    onCreate: DBManager.onDBCreate(),
-    version: 1
-  );
   ///Run the application once all the setup operations are completed
   runApp(MyIDWalletApp());
 }

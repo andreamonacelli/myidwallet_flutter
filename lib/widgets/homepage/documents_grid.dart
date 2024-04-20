@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myidwallet_flutter/models/dbmanager/dbmanager.dart';
 import 'package:myidwallet_flutter/models/entities/document.dart';
 import 'package:myidwallet_flutter/widgets/homepage/document_placeholder.dart';
 
@@ -9,7 +10,6 @@ class DocumentsGrid extends StatefulWidget{
 
   @override
   State<DocumentsGrid> createState() => _DocumentGridState();
-
 }
 
 ///Handling the state of the grid, which will vary based on the documents in the DB
@@ -17,15 +17,24 @@ class _DocumentGridState extends State<DocumentsGrid>{
 
   List<Document> _documentList = [];
 
+  Future<void> _initializeDocList() async {
+    _documentList = await DBManager.fetchDocuments();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-      shrinkWrap: true,
-      itemCount: _documentList.length,
-      itemBuilder: (BuildContext context, int index) {
-        return DocumentPlaceholder(_documentList[index]);
-      },
+    return FutureBuilder(
+        future: _initializeDocList(),
+        builder: (context, snapshot) {
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            shrinkWrap: true,
+            itemCount: _documentList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return DocumentPlaceholder(_documentList[index]);
+            },
+          );
+        }
     );
   }
 
