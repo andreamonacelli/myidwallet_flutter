@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "565706857620",
+    "project_id": "myidwallet",
+    "storage_bucket": "myidwallet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565706857620:android:b3f968a544d5d751e36881",
+        "android_client_info": {
+          "package_name": "com.monacsoftware.myidwallet_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2nZNM3ho4JwnaHab_HZtviyyMVRxeuwk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
