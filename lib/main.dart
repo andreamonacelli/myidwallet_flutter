@@ -6,8 +6,6 @@ import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  ///Initializing database
-  ///await DBManager.initializeDatabase();
   ///Initializing Camera
   final cameras = await availableCameras();
   MyIDWalletAppState.selectedCamera = cameras.first;

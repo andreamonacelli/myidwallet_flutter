@@ -10,9 +10,11 @@ class RoutesManager {
   static const String homepageRoute = "/";
   static const String docTypeSelectionPageRoute = "/doctypeselection";
   static const String cameraScreenRoute = "/docscanner";
+  static late String databaseOperation;
 
   RoutesManager._();
 
+  ///TODO: Edit the method in order to ensure that it waits for the respective database operation
   static Route<dynamic> generateRoute(RouteSettings settings){
     switch(settings.name){
       case homepageRoute:
