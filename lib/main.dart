@@ -2,14 +2,12 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:myidwallet_flutter/models/dbmanager/dbmanager.dart';
 import 'package:myidwallet_flutter/routes.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite/sqflite.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   ///Initializing database
-  await DBManager.initializeDatabase();
+  ///await DBManager.initializeDatabase();
   ///Initializing Camera
   final cameras = await availableCameras();
   MyIDWalletAppState.selectedCamera = cameras.first;
@@ -22,17 +20,26 @@ class MyIDWalletApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyIDWalletAppState(),
-      child: MaterialApp(
-        title: 'My ID Wallet',
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
-        ),
-        initialRoute: RoutesManager.homepageRoute,
-        onGenerateRoute: RoutesManager.generateRoute,
-      ),
+    return FutureBuilder(
+        future: DBManager.initializeDatabase(),
+        builder: (builderContext, snapshot) {
+          if(snapshot.connectionState == ConnectionState.done){
+            return ChangeNotifierProvider(
+              create: (context) => MyIDWalletAppState(),
+              child: MaterialApp(
+                title: 'My ID Wallet',
+                theme: ThemeData(
+                  useMaterial3: true,
+                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
+                ),
+                initialRoute: RoutesManager.homepageRoute,
+                onGenerateRoute: RoutesManager.generateRoute,
+              ),
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        }
     );
   }
 }

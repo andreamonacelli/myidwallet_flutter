@@ -26,14 +26,18 @@ class _DocumentGridState extends State<DocumentsGrid>{
     return FutureBuilder(
         future: _initializeDocList(),
         builder: (context, snapshot) {
-          return GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            shrinkWrap: true,
-            itemCount: _documentList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return DocumentPlaceholder(_documentList[index]);
-            },
-          );
+          if(snapshot.connectionState == ConnectionState.done){
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              shrinkWrap: true,
+              itemCount: _documentList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return DocumentPlaceholder(_documentList[index]);
+              },
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
         }
     );
   }

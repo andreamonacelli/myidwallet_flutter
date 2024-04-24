@@ -29,6 +29,10 @@ class CheckImagePage extends StatelessWidget{
       },
     );
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Risultati scansione"),
+        centerTitle: true
+      ),
       body: Column(
         children: [
           Container(
