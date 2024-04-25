@@ -6,7 +6,8 @@ class DocumentPlaceholdersList extends StatelessWidget{
   /* final String _resourceFilePath = "assets/data/available_documents.json";
   final String _availableTypesEncoding = "document_nation"; */
   static final List<List<String>> availableTypesAndNations = [
-    ["healthcare_it", "Codice Fiscale", "Italia", "healthcare"]
+    ["healthcare_it", "Tessera Sanitaria", "Italia", "healthcare"]
+    /*,["personalid_it", "Carta d'Identità", "Italia", "personalid"]*/
   ];
 
   @override
