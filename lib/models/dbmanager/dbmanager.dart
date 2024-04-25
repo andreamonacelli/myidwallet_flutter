@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:myidwallet_flutter/models/entities/document.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBManager{
-  static late Database database;
+  static late Future<Database> database;
   static const String tableName = "Documents";
   static const String idColumn = "INTERNAL_DOC_ID";
   static const String nameColumn = "DOC_NAME";
@@ -16,21 +15,27 @@ class DBManager{
   static const String additionalDataColumn = "DOC_ADDITIONAL_DATA";
 
   static Future<void> initializeDatabase() async {
-    database = await openDatabase(
+    database = openDatabase(
       join(await getDatabasesPath(), 'myidwallet_database.db'),
-      onCreate: (db, version) => DBManager.onDBCreate(),
+      onCreate: (db, version) {
+        db.execute(
+            "CREATE TABLE $tableName (\n\t\"$idColumn\"\tTEXT NOT NULL,\n\t\"$nameColumn\"\tTEXT,\n\t\"$typeColumn\"\tTEXT,\n\t\"$nationColumn\"\tTEXT,\n\t\"$uniqueCodeColumn\"\tTEXT,\n\t\"$expiryDateColumn\"\tTEXT,\n\t\"$issuedDateColumn\"\tTEXT,\n\t\"$additionalDataColumn\"\tTEXT,\n\tPRIMARY KEY(\"$idColumn\")\n)"
+        );
+      },
       version: 1
     );
   }
 
   static Future<void> onDBCreate() async{
-    return await database.execute(
+    final db = await database;
+    await db.execute(
         "CREATE TABLE $tableName (\n\t\"$idColumn\"\tTEXT NOT NULL,\n\t\"$nameColumn\"\tTEXT,\n\t\"$typeColumn\"\tTEXT,\n\t\"$nationColumn\"\tTEXT,\n\t\"$uniqueCodeColumn\"\tTEXT,\n\t\"$expiryDateColumn\"\tTEXT,\n\t\"$issuedDateColumn\"\tTEXT,\n\t\"$additionalDataColumn\"\tTEXT,\n\tPRIMARY KEY(\"$idColumn\")\n)"
     );
   }
 
   static Future<void> insertDocument(Document document) async {
-    await database.insert(
+    final db = await database;
+    await db.insert(
         tableName,
         document.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace
@@ -38,7 +43,8 @@ class DBManager{
   }
 
   static Future<List<Document>> fetchDocuments() async {
-    final List<Map<String, Object?>> documentAsMaps = await database.query(tableName);
+    final db = await database;
+    final List<Map<String, Object?>> documentAsMaps = await db.query(tableName);
     return [
       for(final {
         'id': documentGUID as String,
@@ -55,7 +61,8 @@ class DBManager{
   }
 
   static Future<void>? updateDocument(Document document) async {
-    await database.update(
+    final db = await database;
+    await db.update(
         tableName,
         document.toMap(),
         where: 'id = ?',
@@ -64,7 +71,8 @@ class DBManager{
   }
 
   static Future<void>? deleteDocument(String docGUID) async {
-    await database.delete(
+    final db = await database;
+    await db.delete(
         tableName,
         where: 'id = ?',
         whereArgs: [docGUID]

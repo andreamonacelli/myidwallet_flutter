@@ -7,6 +7,7 @@ class DocumentTypePlaceholder extends StatelessWidget {
   final int _fileNameIndex = 0;
   final int _documentTypeTitle = 1;
   final int _documentTypeNation = 2;
+  final int _documentTypeDescr = 3;
   late final List<String> _docTypeDescription;
 
   DocumentTypePlaceholder(this._docTypeDescription);
@@ -16,7 +17,7 @@ class DocumentTypePlaceholder extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         /* LOG */print("${_docTypeDescription[_fileNameIndex]} placeholder has been tapped");
-        DocTypeSelectionPage.selectedType = _docTypeDescription[_documentTypeTitle];
+        DocTypeSelectionPage.selectedType = _docTypeDescription[_documentTypeDescr];
         DocTypeSelectionPage.selectedNation = _docTypeDescription[_documentTypeNation];
         Navigator.of(context).pushNamed(RoutesManager.cameraScreenRoute);
       },
