@@ -19,6 +19,7 @@ dependencies:
   path: ^1.9.0
   sqflite: ^2.3.3
   image_picker: ^1.0.4
+  uuid: ^4.4.0
   google_mlkit_text_recognition: ^0.10.0
 
 dev_dependencies:

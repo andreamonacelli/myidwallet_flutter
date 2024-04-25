@@ -83,8 +83,11 @@ class CheckImagePage extends StatelessWidget{
         ),
         onPressed: () {
           ///TODO: Add the data processing snippet -> save it in the DB instantly
-          Document newDocument = Document(formController.text, DocTypeSelectionPage.selectedNation);
-          newDocument.documentTypeDescr = DocTypeSelectionPage.selectedType;
+          //Document newDocument = Document(formController.text, DocTypeSelectionPage.selectedNation);
+          //newDocument.documentTypeDescr = DocTypeSelectionPage.selectedType;
+          //newDocument.generateDocumentGUID();
+          Document newDocument = Document.forTesting(formController.text, DocTypeSelectionPage.selectedNation);
+          newDocument.placeholderBGImage = DocTypeSelectionPage.placeholderBGImagePath;
           DBManager.insertDocument(newDocument);
           Navigator.of(context).pushNamed(RoutesManager.homepageRoute);
         },

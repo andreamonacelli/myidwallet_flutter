@@ -1,8 +1,11 @@
+import 'dart:convert';
+
+import 'package:myidwallet_flutter/models/dbmanager/dbmanager.dart';
 import 'package:myidwallet_flutter/models/entities/driving_license.dart';
 import 'package:myidwallet_flutter/models/entities/healthcare_insurance.dart';
 import 'package:myidwallet_flutter/models/entities/passport.dart';
 import 'package:myidwallet_flutter/models/entities/personal_id.dart';
-
+import 'package:uuid/uuid.dart';
 import 'document_type.dart';
 
 ///Definition of the document entity (based on its transposition from the DB structure)
@@ -13,9 +16,9 @@ class Document {
   late String _documentTypeDescr;
   late String _uniqueCode;
   String _documentNation;
-  late DateTime _expiryDate;
-  late DateTime _dateOfIssue;
-  late Map<String, String> _additionalData;
+  late DateTime? _expiryDate;
+  late DateTime? _dateOfIssue;
+  late Map<String, dynamic> _additionalData;
   DocumentType? _documentType;
   late String _placeholderBGImage;
 
@@ -29,10 +32,18 @@ class Document {
       this._uniqueCode,
       this._expiryDate,
       this._dateOfIssue,
-      this._additionalData
+      this._additionalData,
+      this._placeholderBGImage
   ){
     _documentType = _parseTypeFromDescription();
-    _placeholderBGImage = "assets/images/${_documentTypeDescr}_$_documentNation.png";
+  }
+  Document.forTesting(this._documentHolderName, this._documentNation){
+    _documentTypeDescr = "healthcare";
+    _documentGUID = "tryoutGUID";
+    _uniqueCode = "debugUniqueCode";
+    _expiryDate = DateTime.now();
+    _dateOfIssue = DateTime.now();
+    _additionalData = {"prova": "test"};
   }
 
   ///Methods
@@ -50,15 +61,20 @@ class Document {
 
   Map<String, Object?> toMap(){
     return {
-      'id': _documentGUID,
-      'holderName' : _documentHolderName,
-      'type': _documentTypeDescr,
-      'nation': _documentNation,
-      'uniqueCode': _uniqueCode,
-      'expiryDate': _expiryDate.toIso8601String(),
-      'issueDate': _dateOfIssue.toIso8601String(),
-      'additionalData': _additionalData
+      DBManager.idColumn : _documentGUID,
+      DBManager.nameColumn : _documentHolderName,
+      DBManager.typeColumn : _documentTypeDescr,
+      DBManager.nationColumn : _documentNation,
+      DBManager.uniqueCodeColumn : _uniqueCode,
+      DBManager.expiryDateColumn : _expiryDate?.toIso8601String(),
+      DBManager.issuedDateColumn : _dateOfIssue?.toIso8601String(),
+      DBManager.additionalDataColumn : jsonEncode(_additionalData)
     };
+  }
+
+  void generateDocumentGUID(){
+    Uuid uuid = Uuid();
+    _documentGUID = uuid.v1();
   }
 
   DocumentType _parseTypeFromDescription(){
@@ -81,21 +97,21 @@ class Document {
     _documentType = value;
   }
 
-  Map<String, String> get additionalData => _additionalData;
+  Map<String, dynamic> get additionalData => _additionalData;
 
-  set additionalData(Map<String, String> value) {
+  set additionalData(Map<String, dynamic> value) {
     _additionalData = value;
   }
 
-  DateTime get dateOfIssue => _dateOfIssue;
+  DateTime? get dateOfIssue => _dateOfIssue;
 
-  set dateOfIssue(DateTime value) {
+  set dateOfIssue(DateTime? value) {
     _dateOfIssue = value;
   }
 
-  DateTime get expiryDate => _expiryDate;
+  DateTime? get expiryDate => _expiryDate;
 
-  set expiryDate(DateTime value) {
+  set expiryDate(DateTime? value) {
     _expiryDate = value;
   }
 

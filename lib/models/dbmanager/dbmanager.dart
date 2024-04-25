@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:myidwallet_flutter/models/entities/document.dart';
+import 'package:myidwallet_flutter/widgets/doc_type_selection_page/document_type_placeholder.dart';
+import 'package:myidwallet_flutter/widgets/doc_type_selection_page/document_type_placeholders_list.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -47,17 +50,33 @@ class DBManager{
     final List<Map<String, Object?>> documentAsMaps = await db.query(tableName);
     return [
       for(final {
-        'id': documentGUID as String,
-        'holderName' : documentHolderName as String,
-        'type': documentTypeDescr as String,
-        'nation': documentNation as String,
-        'uniqueCode': uniqueCode as String,
-        'expiryDate': expiryDate as DateTime,
-        'issueDate': dateOfIssue as DateTime,
-        'additionalData': additionalData as Map<String, String>
+        idColumn: documentGUID as String,
+        nameColumn : documentHolderName as String,
+        typeColumn: documentTypeDescr as String,
+        nationColumn: documentNation as String,
+        uniqueCodeColumn: uniqueCode as String,
+        expiryDateColumn: expiryDate as String,
+        issuedDateColumn: dateOfIssue as String,
+        additionalDataColumn: additionalData as String
       } in documentAsMaps)
-      Document.setAll(documentGUID, documentHolderName, documentTypeDescr, documentNation, uniqueCode, expiryDate, dateOfIssue, additionalData)
+      Document.setAll(documentGUID, documentHolderName, documentTypeDescr, documentNation, uniqueCode, DateTime.tryParse(expiryDate), DateTime.tryParse(dateOfIssue), jsonDecode(additionalData), fetchBGImageAssetPath(documentTypeDescr, documentNation))
     ];
+  }
+
+  static String fetchBGImageAssetPath(String typeDescr, String nation){
+    String assetsPath = "assets/images/";
+    String? imageName;
+    for(List<String> documentTypeData in DocumentPlaceholdersList.availableTypesAndNations){
+      if(documentTypeData[DocumentTypePlaceholder.documentTypeDescr] == typeDescr && documentTypeData[DocumentTypePlaceholder.documentTypeNation] == nation){
+        imageName = documentTypeData[DocumentTypePlaceholder.fileNameIndex];
+      }
+    }
+    if(imageName == null){
+      assetsPath += "plain_bg.png";
+    } else {
+      assetsPath += "$imageName.png";
+    }
+    return assetsPath;
   }
 
   static Future<void>? updateDocument(Document document) async {
@@ -65,7 +84,7 @@ class DBManager{
     await db.update(
         tableName,
         document.toMap(),
-        where: 'id = ?',
+        where: '$idColumn = ?',
         whereArgs: [document.documentGUID]
     );
   }
@@ -74,7 +93,7 @@ class DBManager{
     final db = await database;
     await db.delete(
         tableName,
-        where: 'id = ?',
+        where: '$idColumn = ?',
         whereArgs: [docGUID]
     );
   }

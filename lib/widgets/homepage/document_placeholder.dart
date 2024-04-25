@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myidwallet_flutter/models/entities/document.dart';
-import 'package:myidwallet_flutter/routes.dart';
 
 class DocumentPlaceholder extends StatelessWidget {
 
@@ -20,7 +19,7 @@ class DocumentPlaceholder extends StatelessWidget {
         ),
         child: ListTile(
           leading: Image(
-            image: AssetImage("assets/images/${_documentDisplayed.placeholderBGImage}.png"),
+            image: AssetImage(_documentDisplayed.placeholderBGImage),
             fit: BoxFit.fill,
           ),
           title: Text(

@@ -4,10 +4,10 @@ import 'package:myidwallet_flutter/routes/doc_type_selection_page.dart';
 
 class DocumentTypePlaceholder extends StatelessWidget {
 
-  final int _fileNameIndex = 0;
+  static const int fileNameIndex = 0;
   final int _documentTypeTitle = 1;
-  final int _documentTypeNation = 2;
-  final int _documentTypeDescr = 3;
+  static const int documentTypeNation = 2;
+  static const int documentTypeDescr = 3;
   late final List<String> _docTypeDescription;
 
   DocumentTypePlaceholder(this._docTypeDescription);
@@ -16,9 +16,10 @@ class DocumentTypePlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        /* LOG */print("${_docTypeDescription[_fileNameIndex]} placeholder has been tapped");
-        DocTypeSelectionPage.selectedType = _docTypeDescription[_documentTypeDescr];
-        DocTypeSelectionPage.selectedNation = _docTypeDescription[_documentTypeNation];
+        /* LOG */print("${_docTypeDescription[fileNameIndex]} placeholder has been tapped");
+        DocTypeSelectionPage.selectedType = _docTypeDescription[documentTypeDescr];
+        DocTypeSelectionPage.selectedNation = _docTypeDescription[documentTypeNation];
+        DocTypeSelectionPage.placeholderBGImagePath = "assets/images/${_docTypeDescription[fileNameIndex]}.png";
         Navigator.of(context).pushNamed(RoutesManager.cameraScreenRoute);
       },
       child: Card(
@@ -30,7 +31,7 @@ class DocumentTypePlaceholder extends StatelessWidget {
             Flexible( child:
               ListTile(
                   leading: Image(
-                    image: AssetImage("assets/images/${_docTypeDescription[_fileNameIndex]}.png"),
+                    image: AssetImage("assets/images/${_docTypeDescription[fileNameIndex]}.png"),
                     fit: BoxFit.fill,
                   ),
                   title: Text(
@@ -41,7 +42,7 @@ class DocumentTypePlaceholder extends StatelessWidget {
                       ),
                     ),
                   subtitle: Text(
-                      _docTypeDescription[_documentTypeNation],
+                      _docTypeDescription[documentTypeNation],
                       style: TextStyle(
                           fontWeight: FontWeight.normal,
                           fontSize: 14

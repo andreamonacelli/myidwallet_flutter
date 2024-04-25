@@ -5,7 +5,7 @@ class DocumentPlaceholdersList extends StatelessWidget{
 
   /* final String _resourceFilePath = "assets/data/available_documents.json";
   final String _availableTypesEncoding = "document_nation"; */
-  final List<List<String>> _availableTypesAndNations = [
+  static final List<List<String>> availableTypesAndNations = [
     ["healthcare_it", "Codice Fiscale", "Italia", "healthcare"]
   ];
 
@@ -14,10 +14,10 @@ class DocumentPlaceholdersList extends StatelessWidget{
     return ListView.builder(
         padding: EdgeInsets.all(5),
         shrinkWrap: true,
-        itemCount: _availableTypesAndNations.length,
+        itemCount: availableTypesAndNations.length,
         itemBuilder: (BuildContext context, int index) {
           //Future.sync(() => _fetchAvailableTypes());
-          return DocumentTypePlaceholder(_availableTypesAndNations[index]);
+          return DocumentTypePlaceholder(availableTypesAndNations[index]);
         }
     );
   }

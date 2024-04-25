@@ -7,6 +7,7 @@ class DocTypeSelectionPage extends StatelessWidget{
   final String _headerString = "Seleziona il tipo di documento:";
   static late String selectedType;
   static late String selectedNation;
+  static late String placeholderBGImagePath;
 
   const DocTypeSelectionPage();
 
