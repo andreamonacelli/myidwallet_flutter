@@ -15,7 +15,7 @@ class DocumentCardView extends StatelessWidget {
     String backgroundImageResource = _boundDocument.placeholderBGImage;
     return Container(
       width: MediaQuery.of(context).size.width / 2,
-      height: MediaQuery.of(context).size.height / 4,
+      height: MediaQuery.of(context).size.height / 6,
       margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
       decoration: BoxDecoration(
         image: DecorationImage(

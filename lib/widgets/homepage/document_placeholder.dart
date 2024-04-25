@@ -13,23 +13,28 @@ class DocumentPlaceholder extends StatelessWidget {
       onTap: () {
         print("${_documentDisplayed.documentHolderName} document placeholder has been tapped");
       },
-      child: Card(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25)
-        ),
-        child: ListTile(
-          leading: Image(
-            image: AssetImage(_documentDisplayed.placeholderBGImage),
-            fit: BoxFit.fill,
-          ),
-          title: Text(
-            _documentDisplayed.documentHolderName,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16
+      child: Container(
+          height: MediaQuery.of(context).size.height / 4,
+          padding: EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            color: Colors.white70,
+            borderRadius: BorderRadius.circular(15),
+            image: DecorationImage(
+              image: AssetImage(_documentDisplayed.placeholderBGImage),
+              fit: BoxFit.fill,
             ),
           ),
-        ),
+        child: Center(
+            child: Text(
+                _documentDisplayed.documentHolderName,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                  color: Colors.black87
+                ),
+            )
+        )
       ),
     );
   }

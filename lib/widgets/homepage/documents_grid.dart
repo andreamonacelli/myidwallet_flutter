@@ -23,6 +23,8 @@ class _DocumentGridState extends State<DocumentsGrid>{
 
   @override
   Widget build(BuildContext context) {
+    final double gridItemWidth = MediaQuery.of(context).size.width / 2;
+    final double gridItemHeight = MediaQuery.of(context).size.height / 4.5;
     return FutureBuilder(
         future: _initializeDocList(),
         builder: (context, snapshot) {
@@ -30,7 +32,12 @@ class _DocumentGridState extends State<DocumentsGrid>{
             return Expanded(
                 child: GridView.builder(
                   physics: ScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                  padding: EdgeInsets.fromLTRB(5, 2, 5, 0),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: (gridItemWidth) / (gridItemHeight),
+                      crossAxisSpacing: 2.5
+                  ),
                   shrinkWrap: true,
                   itemCount: _documentList.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -39,7 +46,9 @@ class _DocumentGridState extends State<DocumentsGrid>{
                 )
             );
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CircularProgressIndicator()
+            );
           }
         }
     );
