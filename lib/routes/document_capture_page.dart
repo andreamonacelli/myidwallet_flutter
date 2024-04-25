@@ -44,12 +44,10 @@ class DocumentCapturePageState extends State<DocumentCapturePage> {
         future: _initializeCameraControllerFuture,
         builder: (context, snapshot) {
           if(snapshot.connectionState == ConnectionState.done){
-            return Column(
+            return Stack(
               children: [
-                HeaderTextCard("Scansiona il documento:", Colors.grey, Colors.black87),
-                Expanded(
-                  child: CameraPreview(_cameraController)
-                )
+                CameraPreview(_cameraController),
+                HeaderTextCard("Scansiona il documento:", Colors.cyan, Colors.white70)
               ],
             );
           } else {
@@ -73,7 +71,11 @@ class DocumentCapturePageState extends State<DocumentCapturePage> {
             print(exception);
           }
         },
-        child: const Icon(Icons.camera_alt),
+        backgroundColor: Colors.cyan,
+        child: const Icon(
+            Icons.camera_alt,
+            color: Colors.white70,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
