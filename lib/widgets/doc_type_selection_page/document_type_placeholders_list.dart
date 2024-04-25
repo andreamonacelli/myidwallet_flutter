@@ -11,14 +11,17 @@ class DocumentPlaceholdersList extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        padding: EdgeInsets.all(5),
-        shrinkWrap: true,
-        itemCount: availableTypesAndNations.length,
-        itemBuilder: (BuildContext context, int index) {
-          //Future.sync(() => _fetchAvailableTypes());
-          return DocumentTypePlaceholder(availableTypesAndNations[index]);
-        }
+    return Expanded(
+        child: ListView.builder(
+            physics: ScrollPhysics(),
+            padding: EdgeInsets.all(5),
+            shrinkWrap: true,
+            itemCount: availableTypesAndNations.length,
+            itemBuilder: (BuildContext context, int index) {
+              //Future.sync(() => _fetchAvailableTypes());
+              return DocumentTypePlaceholder(availableTypesAndNations[index]);
+            }
+        )
     );
   }
 
