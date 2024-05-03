@@ -37,15 +37,17 @@ class DocumentTypePlaceholder extends StatelessWidget {
                   title: Text(
                       _docTypeDescription[_documentTypeTitle],
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20
+                        fontFamily: 'Baloo2',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20
                       ),
                     ),
                   subtitle: Text(
                       _docTypeDescription[documentTypeNation],
                       style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 14
+                        fontFamily: 'Baloo2',
+                        fontWeight: FontWeight.normal,
+                        fontSize: 14
                       ),
                     )
               )

@@ -33,6 +33,7 @@ class DocumentPlaceholder extends StatelessWidget {
                 _documentDisplayed.documentHolderName,
                 textAlign: TextAlign.center,
                 style: TextStyle(
+                  fontFamily: 'Baloo2',
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
                   color: Colors.black87

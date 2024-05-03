@@ -21,8 +21,9 @@ class DocumentTextInfoList extends StatelessWidget {
           child: Text(
             documentDataList[index],
             style: TextStyle(
-                fontSize: 15,
-                color: Colors.black87
+              fontSize: 15,
+              fontFamily: 'Baloo2',
+              color: Colors.black87
             ),
           )
         );

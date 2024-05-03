@@ -32,9 +32,10 @@ class HeaderTextCard extends StatelessWidget{
       child: Text(
           _headerString,
           style: TextStyle(
-              color: _textColor,
-              fontSize: 20,
-              fontWeight: FontWeight.bold
+            fontFamily: 'Baloo2',
+            color: _textColor,
+            fontSize: 20,
+            fontWeight: FontWeight.bold
           ),
       ),
     );

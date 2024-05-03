@@ -28,6 +28,7 @@ class DocumentCardView extends StatelessWidget {
         child: Text(
           _boundDocument.documentHolderName,
           style: TextStyle(
+            fontFamily: 'Baloo2',
             fontSize: 15,
             fontWeight: FontWeight.normal,
           ),

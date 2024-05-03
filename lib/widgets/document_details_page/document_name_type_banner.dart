@@ -32,6 +32,7 @@ class DocumentMainInfoBanner extends StatelessWidget {
                 DocumentPlaceholdersList.getVerboseTypeDescr(_displayedDocument.documentTypeDescr, _displayedDocument.documentNation),
                 softWrap: true,
                 style: TextStyle(
+                  fontFamily: 'Baloo2',
                   fontSize: 18,
                   color: Colors.black87
                 ),
@@ -45,6 +46,7 @@ class DocumentMainInfoBanner extends StatelessWidget {
                 _displayedDocument.documentHolderName,
                 softWrap: true,
                 style: TextStyle(
+                  fontFamily: 'Baloo2',
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87
