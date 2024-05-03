@@ -72,6 +72,24 @@ class Document {
     };
   }
 
+  List<String> toList(){
+    String formattedDateOfIssue = "${_dateOfIssue?.day}/${_dateOfIssue?.month}/${_dateOfIssue?.year}";
+    String formattedExpiryDate = "${_expiryDate?.day}/${_expiryDate?.month}/${_expiryDate?.year}";
+    List<String> outList = [
+      "Intestatario documento:    $_documentHolderName",
+      "Nazione:    $_documentNation",
+      "Data di emissione:    $formattedDateOfIssue",
+      "Data di scadenza:    $formattedExpiryDate",
+      "Informazioni aggiuntive:",
+    ];
+    for(String key in _additionalData.keys){
+      outList.add(
+        "$key:    ${_additionalData[key]}"
+      );
+    }
+    return outList;
+  }
+
   void generateDocumentGUID(){
     Uuid uuid = Uuid();
     _documentGUID = uuid.v1();

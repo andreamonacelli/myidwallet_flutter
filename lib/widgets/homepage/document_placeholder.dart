@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myidwallet_flutter/models/entities/document.dart';
+import 'package:myidwallet_flutter/routes/document_details_page.dart';
+import 'package:myidwallet_flutter/routes.dart';
 
 class DocumentPlaceholder extends StatelessWidget {
 
@@ -12,6 +14,8 @@ class DocumentPlaceholder extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         print("${_documentDisplayed.documentHolderName} document placeholder has been tapped");
+        DocumentDetailsPage.displayedDocument = _documentDisplayed;
+        Navigator.of(context).pushNamed(RoutesManager.documentDetailsRoute);
       },
       child: Container(
           height: MediaQuery.of(context).size.height / 4,

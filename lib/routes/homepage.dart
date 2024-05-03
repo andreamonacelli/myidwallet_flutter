@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
         tooltip: 'Aggiungi nuovo documento',
         shape: CircleBorder(),
         backgroundColor: Colors.cyan,
-        onPressed: () => Navigator.of(context).pushNamed(RoutesManager.docTypeSelectionPageRoute), /// To be changed as soon as the adding mechanism will be implemented
+        onPressed: () => Navigator.of(context).pushNamed(RoutesManager.docTypeSelectionPageRoute),
         child: const Icon(Icons.add, size: 35, color: Colors.white70)
       ),
     );

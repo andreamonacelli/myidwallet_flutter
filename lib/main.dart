@@ -5,10 +5,6 @@ import 'package:myidwallet_flutter/routes.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  ///Initializing Camera
-  final cameras = await availableCameras();
-  MyIDWalletAppState.selectedCamera = cameras.first;
   ///Run the application once all the setup operations are completed
   runApp(MyIDWalletApp());
 }
@@ -19,7 +15,7 @@ class MyIDWalletApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: DBManager.initializeDatabase(),
+        future: initializeApplication(),
         builder: (builderContext, snapshot) {
           if(snapshot.connectionState == ConnectionState.done){
             return ChangeNotifierProvider(
@@ -40,6 +36,14 @@ class MyIDWalletApp extends StatelessWidget {
         }
     );
   }
+
+  Future<void> initializeApplication() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    final cameras = await availableCameras();
+    MyIDWalletAppState.selectedCamera = cameras.first;
+    DBManager.initializeDatabase();
+  }
+
 }
 
 class MyIDWalletAppState extends ChangeNotifier {
