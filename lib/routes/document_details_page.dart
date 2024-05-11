@@ -1,6 +1,9 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:myidwallet_flutter/models/dbmanager/dbmanager.dart';
 import 'package:myidwallet_flutter/models/entities/document.dart';
+import 'package:myidwallet_flutter/routes.dart';
+import 'package:myidwallet_flutter/widgets/document_details_page/confirmation_dialog.dart';
 import 'package:myidwallet_flutter/widgets/document_details_page/document_info_list.dart';
 import 'package:myidwallet_flutter/widgets/document_details_page/document_name_type_banner.dart';
 
@@ -19,12 +22,19 @@ class DocumentDetailsPage extends StatelessWidget {
           IconButton(
               onPressed: () {
                 print("Edit document button pressed!");
+                /* Bring user to a similar page but where the fields are editable */
               },
               icon: Icon(Icons.edit)
           ),
           IconButton(
-              onPressed: () {
+              onPressed: () async {
                 print("Delete document button pressed!");
+                /* Ask user for confirmation then invoke the DB delete procedure */
+                showDialog<String>(
+                    context: context,
+                    builder: (BuildContext buildContext) => ConfirmationDialog("delete_doc", RoutesManager.homepageRoute)
+                );
+                //await DBManager.deleteDocument(displayedDocument.documentGUID);
               },
               icon: Icon(Icons.delete_rounded)
           )

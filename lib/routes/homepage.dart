@@ -10,20 +10,23 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-            children: [
-              HeaderTextCard("Benvenuto nel tuo wallet!", Colors.cyan, Colors.white70),
-              DocumentsGrid(),
-            ],
-          ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Aggiungi nuovo documento',
-        shape: CircleBorder(),
-        backgroundColor: Colors.cyan,
-        onPressed: () => Navigator.of(context).pushNamed(RoutesManager.docTypeSelectionPageRoute),
-        child: const Icon(Icons.add, size: 35, color: Colors.white70)
-      ),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: Column(
+          children: [
+            HeaderTextCard("Benvenuto nel tuo wallet!", Colors.cyan, Colors.white70),
+            DocumentsGrid(),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+            tooltip: 'Aggiungi nuovo documento',
+            shape: CircleBorder(),
+            backgroundColor: Colors.cyan,
+            onPressed: () => Navigator.of(context).pushNamed(RoutesManager.docTypeSelectionPageRoute),
+            child: const Icon(Icons.add, size: 35, color: Colors.white70)
+        ),
+      )
     );
   }
 }
