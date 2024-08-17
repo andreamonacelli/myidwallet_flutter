@@ -1,9 +1,11 @@
+import 'package:flutter_tesseract_ocr/flutter_tesseract_ocr.dart';
 import 'package:myidwallet_flutter/models/entities/document_type.dart';
 
 class Passport implements DocumentType{
   @override
-  Map<String, String> fillDataFromImage(image) {
-    // TODO: implement fillDataFromImage
-    throw UnimplementedError();
+  Future<String> recognizeTextFromImage(String imagePath) async {
+    String recognizedText = await FlutterTesseractOcr.extractText(imagePath);
+    //Process recognizedText
+    return recognizedText;
   }
 }
