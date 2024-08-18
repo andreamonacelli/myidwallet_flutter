@@ -101,16 +101,13 @@ class CheckImagePage extends StatelessWidget{
                           color: Colors.white70
                       ),
                     ),
-                    onPressed: () async {
+                    onPressed: () {
                       ///TODO: Add the data processing snippet -> save it in the DB instantly
-                      Document newDocument = Document(formController.text, DocTypeSelectionPage.selectedNation);
-                      newDocument.documentTypeDescr = DocTypeSelectionPage.selectedType;
-                      newDocument.documentNation = DocTypeSelectionPage.selectedNation;
-                      newDocument.documentType = newDocument.parseTypeFromDescription();
-                      //Document newDocument = Document.forTesting(formController.text, DocTypeSelectionPage.selectedNation);
+                      //Document newDocument = Document(formController.text, DocTypeSelectionPage.selectedNation);
+                      //newDocument.documentTypeDescr = DocTypeSelectionPage.selectedType;
+                      Document newDocument = Document.forTesting(formController.text, DocTypeSelectionPage.selectedNation);
                       newDocument.placeholderBGImage = DocTypeSelectionPage.placeholderBGImagePath;
                       newDocument.generateDocumentGUID();
-                      var tempVar = await newDocument.documentType?.recognizeTextFromImage(_imagePath);
                       DBManager.insertDocument(newDocument);
                       Navigator.of(context).pushNamed(RoutesManager.homepageRoute);
                     },

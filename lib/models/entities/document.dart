@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter_tesseract_ocr/flutter_tesseract_ocr.dart';
 import 'package:myidwallet_flutter/models/dbmanager/dbmanager.dart';
 import 'package:myidwallet_flutter/models/entities/driving_license.dart';
 import 'package:myidwallet_flutter/models/entities/healthcare_insurance.dart';
@@ -36,7 +35,7 @@ class Document {
       this._additionalData,
       this._placeholderBGImage
   ){
-    _documentType = parseTypeFromDescription();
+    _documentType = _parseTypeFromDescription();
   }
   Document.forTesting(this._documentHolderName, this._documentNation){
     _documentTypeDescr = "healthcare";
@@ -96,7 +95,7 @@ class Document {
     _documentGUID = uuid.v1();
   }
 
-  DocumentType parseTypeFromDescription(){
+  DocumentType _parseTypeFromDescription(){
     switch(_documentTypeDescr){
       case 'healthcare':
         return HealthcareInsurance();
@@ -168,11 +167,6 @@ class Document {
 
   set placeholderBGImage(String value) {
     _placeholderBGImage = value;
-  }
-
-  Future<String> recognizeTextFromImage(String imagePath) async {
-    String recognizedText = await FlutterTesseractOcr.extractText(imagePath);
-    return recognizedText;
   }
 
 }
