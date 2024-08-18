@@ -17,8 +17,8 @@ class Document {
   late String _uniqueCode;
   String _documentNation;
   late DateTime? _expiryDate;
-  late DateTime? _dateOfIssue;
-  late Map<String, dynamic> _additionalData;
+  DateTime? _dateOfIssue;
+  late Map<String, Object?> _additionalData;
   DocumentType? _documentType;
   late String _placeholderBGImage;
 
@@ -59,7 +59,7 @@ class Document {
     throw UnimplementedError();
   }
 
-  Map<String, Object?> toMap(){
+  Map<String, String?> toMap(){
     return {
       DBManager.idColumn : _documentGUID,
       DBManager.nameColumn : _documentHolderName,
@@ -115,9 +115,9 @@ class Document {
     _documentType = value;
   }
 
-  Map<String, dynamic> get additionalData => _additionalData;
+  Map<String, Object?> get additionalData => _additionalData;
 
-  set additionalData(Map<String, dynamic> value) {
+  set additionalData(Map<String, Object?> value) {
     _additionalData = value;
   }
 

@@ -41,7 +41,7 @@ class MyIDWalletApp extends StatelessWidget {
     WidgetsFlutterBinding.ensureInitialized();
     final cameras = await availableCameras();
     MyIDWalletAppState.selectedCamera = cameras.first;
-    DBManager.initializeDatabase();
+    await DBManager.initializeDatabase();
   }
 
 }

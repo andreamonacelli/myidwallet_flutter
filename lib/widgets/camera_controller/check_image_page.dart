@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:myidwallet_flutter/models/dbmanager/dbmanager.dart';
 import 'package:myidwallet_flutter/models/entities/document.dart';
 import 'package:myidwallet_flutter/routes.dart';
@@ -108,9 +109,17 @@ class CheckImagePage extends StatelessWidget{
                       newDocument.documentType = newDocument.parseTypeFromDescription();
                       //Document newDocument = Document.forTesting(formController.text, DocTypeSelectionPage.selectedNation);
                       newDocument.placeholderBGImage = DocTypeSelectionPage.placeholderBGImagePath;
-                      var tempVar = await newDocument.documentType?.recognizeTextFromImage(_imagePath, newDocument.documentNation);
+                      Map<String, Object?>? recognizedData = await newDocument.documentType?.recognizeTextFromImage(_imagePath, newDocument.documentNation);
+                      newDocument.additionalData = {};
+                      for(MapEntry<String, Object?> entry in recognizedData!.entries){
+                        switch(entry.key){
+                          case "Unique Code": newDocument.uniqueCode = entry.value.toString();
+                          case "Expiry Date": newDocument.expiryDate = DateFormat("dd/MM/yyyy").parse(entry.value.toString());
+                          default: newDocument.additionalData.addAll({entry.key: entry.value});
+                        }
+                      }
                       newDocument.generateDocumentGUID();
-                      DBManager.insertDocument(newDocument);
+                      await DBManager.insertDocument(newDocument);
                       Navigator.of(context).pushNamed(RoutesManager.homepageRoute);
                     },
                   )

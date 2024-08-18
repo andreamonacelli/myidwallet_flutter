@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:myidwallet_flutter/models/entities/document_type.dart';
+import 'package:fuzzywuzzy/fuzzywuzzy.dart';
 
 class HealthcareInsurance implements DocumentType{
   @override
-  Future<Map<String, String>> recognizeTextFromImage(String imagePath, String nation) async {
+  Future<Map<String, Object?>> recognizeTextFromImage(String imagePath, String nation) async {
     final inputImage = InputImage.fromFilePath(imagePath);
     final textRecognizer = TextRecognizer();
     final RecognizedText recognizedText = await textRecognizer.processImage(inputImage);
@@ -15,16 +16,14 @@ class HealthcareInsurance implements DocumentType{
     return recognizedDataMap;
   }
 
-  Map<String, String> parseTesseraSanitariaText(String recognizedText) {
-    Map<String, String> dataMap = {};
+  Map<String, Object?> parseTesseraSanitariaText(String recognizedText) {
+    Map<String, Object> dataMap = {};
     RegExp codiceFiscaleRegex = RegExp(r'^[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z]\$');
     RegExp codiceFiscaleTypoRegex = RegExp(r'^[A-Z0]{6}[0-9O]{2}[A-Z0][0-9O]{2}[A-Z0][0-9O]{3}[A-Z0]$');
     RegExp numeroIdTesseraRegex = RegExp(r'\b\d{20}\b');
     List<String> lines = recognizedText.split('\n');
-    List<String> headers = ["3 Cognome", "4 Nome", "5 Data di nascita", "6 Numero identificazione personale", "7 Numero identificazione dell'istituzione", "8 Numero di identificazione della tessera", "9 Scadenza"];
-    List<String> textToNotConsider = ["TESSERA EUROPEA DI ASSICURAZIONE MALATTIA", "IT"];
     for(String line in lines){
-      if(headers.contains(line) || textToNotConsider.contains(line)){
+      if(discardString(line)){
         continue;
       }
       if(line.contains("SSN-MIN")){
@@ -51,15 +50,15 @@ class HealthcareInsurance implements DocumentType{
         try{
           DateTime date = DateFormat("dd/MM/yyyy").parse(line.trim());
           if(date.isBefore(DateTime.now())){
-            dataMap["Birth Date"] = line.trim();
+            dataMap["Data di nascita"] = line.trim();
           } else {
             dataMap["Expiry Date"] = line.trim();
           }
         } catch(e){
-          if(dataMap.containsKey("Surname")){
-            dataMap["Name"] = line.trim();
+          if(dataMap.containsKey("Cognome")){
+            dataMap["Nome"] = line.trim();
           } else{
-            dataMap["Surname"] = line.trim();
+            dataMap["Cognome"] = line.trim();
           }
         }
       }
@@ -78,6 +77,27 @@ class HealthcareInsurance implements DocumentType{
       return char;
     }).join();
     return correctedCodiceFiscale;
+  }
+
+  bool discardString(String string){
+    List<String> headers = ["3 Cognome", "4 Nome", "5 Data di nascita", "6 Numero identificazione personale", "7 Numero identificazione dell'istituzione", "8 Numero di identificazione della tessera", "9 Scadenza"];
+    List<String> textToNotConsider = ["TESSERA EUROPEA DI ASSICURAZIONE MALATTIA", "IT"];
+    if(headers.contains(string) || textToNotConsider.contains(string)){
+      return true;
+    }
+    //Perform fuzzy matching over the strings in order to be solid against low quality readings
+    for(String header in headers){
+      if(ratio(string, header) >= 80){
+        return true;
+      }
+    }
+    for(String text in textToNotConsider){
+      if(ratio(string, text) >= 80){
+        return true;
+      }
+    }
+    //If all the checks are passed, then the string is good to be used
+    return false;
   }
 
 }
