@@ -35,7 +35,7 @@ class Document {
       this._additionalData,
       this._placeholderBGImage
   ){
-    _documentType = _parseTypeFromDescription();
+    _documentType = parseTypeFromDescription();
   }
   Document.forTesting(this._documentHolderName, this._documentNation){
     _documentTypeDescr = "healthcare";
@@ -95,7 +95,7 @@ class Document {
     _documentGUID = uuid.v1();
   }
 
-  DocumentType _parseTypeFromDescription(){
+  DocumentType parseTypeFromDescription(){
     switch(_documentTypeDescr){
       case 'healthcare':
         return HealthcareInsurance();
