@@ -35,15 +35,15 @@ class HealthcareInsurance implements DocumentType{
           continue;
         }
       }
-      if(codiceFiscaleRegex.hasMatch(line)){
-        dataMap["Unique Code"] = line;
+      if(codiceFiscaleRegex.hasMatch(line.replaceAll(" ", ""))){
+        dataMap["Unique Code"] = line.replaceAll(" ", "");
         continue;
       }
-      if(codiceFiscaleTypoRegex.hasMatch(line)){
-        dataMap["Unique Code"] = codiceFiscaleTypoFixing(line);
+      if(codiceFiscaleTypoRegex.hasMatch(line.replaceAll(" ", ""))){
+        dataMap["Unique Code"] = codiceFiscaleTypoFixing(line.replaceAll(" ", ""));
         continue;
       }
-      if(numeroIdTesseraRegex.hasMatch(line)){
+      if(numeroIdTesseraRegex.hasMatch(line.replaceAll(" ", ""))){
         dataMap["Numero di identificazione della tessera"] = line;
       }
       else {
