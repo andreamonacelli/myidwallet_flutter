@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:myidwallet_flutter/routes.dart';
 import 'package:myidwallet_flutter/models/entities/document.dart';
 import 'package:myidwallet_flutter/models/dbmanager/dbmanager.dart';
@@ -60,8 +61,8 @@ class _DocumentEditPageState extends State<DocumentEditPage> {
   void _saveDocument() {
     widget.displayedDocument.documentHolderName = _documentHolderNameController.text;
     widget.displayedDocument.documentNation = _documentNationController.text;
-    widget.displayedDocument.dateOfIssue = DateTime.tryParse(_dateOfIssueController.text) ?? widget.displayedDocument.dateOfIssue;
-    widget.displayedDocument.expiryDate = DateTime.tryParse(_expiryDateController.text) ?? widget.displayedDocument.expiryDate;
+    widget.displayedDocument.dateOfIssue = DateFormat("dd/MM/yyyy").parse(_dateOfIssueController.text) ?? widget.displayedDocument.dateOfIssue;
+    widget.displayedDocument.expiryDate = DateFormat("dd/MM/yyyy").parse(_expiryDateController.text) ?? widget.displayedDocument.expiryDate;
     widget.displayedDocument.additionalData = {
       for (var entry in _additionalDataControllers.entries)
         entry.key: entry.value.text
