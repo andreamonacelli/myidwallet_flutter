@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:myidwallet_flutter/models/dbmanager/dbmanager.dart';
 import 'package:myidwallet_flutter/models/entities/driving_license.dart';
 import 'package:myidwallet_flutter/models/entities/healthcare_insurance.dart';

@@ -5,6 +5,7 @@ import 'package:myidwallet_flutter/routes.dart';
 import 'package:myidwallet_flutter/widgets/document_details_page/confirmation_dialog.dart';
 import 'package:myidwallet_flutter/widgets/document_details_page/document_info_list.dart';
 import 'package:myidwallet_flutter/widgets/document_details_page/document_name_type_banner.dart';
+import 'package:myidwallet_flutter/widgets/document_edit_page/document_edit_page.dart';
 
 class DocumentDetailsPage extends StatelessWidget {
 
@@ -19,9 +20,13 @@ class DocumentDetailsPage extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: () {
+              onPressed: () async {
                 print("Edit document button pressed!");
                 /* Bring user to a similar page but where the fields are editable */
+                final editResult = await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DocumentEditPage(displayedDocument: displayedDocument,) )
+                );
               },
               icon: Icon(Icons.edit)
           ),
