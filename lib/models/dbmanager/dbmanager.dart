@@ -56,10 +56,10 @@ class DBManager{
         nationColumn: documentNation as String,
         uniqueCodeColumn: uniqueCode as String,
         expiryDateColumn: expiryDate as String,
-        issuedDateColumn: dateOfIssue as String,
+        issuedDateColumn: dateOfIssue as String?,
         additionalDataColumn: additionalData as String
       } in documentAsMaps)
-      Document.setAll(documentGUID, documentHolderName, documentTypeDescr, documentNation, uniqueCode, DateTime.tryParse(expiryDate), DateTime.tryParse(dateOfIssue), jsonDecode(additionalData), fetchBGImageAssetPath(documentTypeDescr, documentNation))
+      Document.setAll(documentGUID, documentHolderName, documentTypeDescr, documentNation, uniqueCode, DateTime.tryParse(expiryDate), (dateOfIssue != null) ? DateTime.tryParse(dateOfIssue) : null, jsonDecode(additionalData), fetchBGImageAssetPath(documentTypeDescr, documentNation))
     ];
   }
 

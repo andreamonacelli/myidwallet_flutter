@@ -9,7 +9,7 @@ class HealthcareInsurance implements DocumentType{
   @override
   Future<Map<String, Object?>> recognizeTextFromImage(String imagePath, String nation) async {
     final inputImage = InputImage.fromFilePath(imagePath);
-    final textRecognizer = TextRecognizer();
+    final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
     final RecognizedText recognizedText = await textRecognizer.processImage(inputImage);
     textRecognizer.close();
     final recognizedDataMap = parseTesseraSanitariaText(recognizedText.text);
@@ -48,11 +48,11 @@ class HealthcareInsurance implements DocumentType{
       }
       else {
         try{
-          DateTime date = DateFormat("dd/MM/yyyy").parse(line.trim());
+          DateTime date = DateFormat("dd/MM/yyyy").parse(line.replaceAll(" ", ""));
           if(date.isBefore(DateTime.now())){
-            dataMap["Data di nascita"] = line.trim();
+            dataMap["Data di nascita"] = line.replaceAll(" ", "");
           } else {
-            dataMap["Expiry Date"] = line.trim();
+            dataMap["Expiry Date"] = line.replaceAll(" ", "");
           }
         } catch(e){
           if(dataMap.containsKey("Cognome")){

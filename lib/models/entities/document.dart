@@ -73,19 +73,20 @@ class Document {
   }
 
   List<String> toList(){
-    String formattedDateOfIssue = "${_dateOfIssue?.day}/${_dateOfIssue?.month}/${_dateOfIssue?.year}";
-    String formattedExpiryDate = "${_expiryDate?.day}/${_expiryDate?.month}/${_expiryDate?.year}";
+    String formattedDateOfIssue = (_dateOfIssue != null) ? "${_dateOfIssue?.day}/${_dateOfIssue?.month}/${_dateOfIssue?.year}" : "Non disponibile";
+    String formattedExpiryDate = (_expiryDate != null) ? "${_expiryDate?.day}/${_expiryDate?.month}/${_expiryDate?.year}" : "Non disponibile";
     List<String> outList = [
       "Intestatario documento:    $_documentHolderName",
       "Nazione:    $_documentNation",
       "Data di emissione:    $formattedDateOfIssue",
       "Data di scadenza:    $formattedExpiryDate",
-      "Informazioni aggiuntive:",
     ];
-    for(String key in _additionalData.keys){
-      outList.add(
-        "$key:    ${_additionalData[key]}"
-      );
+    if(_additionalData.keys.isNotEmpty) {
+      for (String key in _additionalData.keys) {
+        outList.add(
+            "$key:    ${_additionalData[key]}"
+        );
+      }
     }
     return outList;
   }

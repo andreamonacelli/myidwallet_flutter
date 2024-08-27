@@ -1,6 +1,5 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:myidwallet_flutter/models/dbmanager/dbmanager.dart';
 import 'package:myidwallet_flutter/models/entities/document.dart';
 import 'package:myidwallet_flutter/routes.dart';
 import 'package:myidwallet_flutter/widgets/document_details_page/confirmation_dialog.dart';
@@ -40,22 +39,24 @@ class DocumentDetailsPage extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
-        children: [
-          DocumentMainInfoBanner(displayedDocument),
-          Padding(
-            padding: EdgeInsets.fromLTRB(5, 2, 5, 0),
-            child: BarcodeWidget(
-              data: displayedDocument.uniqueCode,
-              barcode: Barcode.code128(),
-              height: MediaQuery.of(context).size.height / _aspectRatio,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            DocumentMainInfoBanner(displayedDocument),
+            Padding(
+              padding: EdgeInsets.fromLTRB(5, 2, 5, 0),
+              child: BarcodeWidget(
+                data: displayedDocument.uniqueCode,
+                barcode: Barcode.code128(),
+                height: MediaQuery.of(context).size.height / _aspectRatio,
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: DocumentTextInfoList(displayedDocument),
-          )
-        ],
+            Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: DocumentTextInfoList(displayedDocument)
+            )
+          ],
+        ),
       )
     );
   }
