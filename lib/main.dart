@@ -5,6 +5,7 @@ import 'package:myidwallet_flutter/routes.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
+  await initializeApplication();
   ///Run the application once all the setup operations are completed
   runApp(MyIDWalletApp());
 }
@@ -14,38 +15,29 @@ class MyIDWalletApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: initializeApplication(),
-        builder: (builderContext, snapshot) {
-          if(snapshot.connectionState == ConnectionState.done){
-            return ChangeNotifierProvider(
-              create: (context) => MyIDWalletAppState(),
-              child: MaterialApp(
-                title: 'My ID Wallet',
-                theme: ThemeData(
-                  useMaterial3: true,
-                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
-                ),
-                initialRoute: RoutesManager.homepageRoute,
-                onGenerateRoute: RoutesManager.generateRoute,
-              ),
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        }
+    return ChangeNotifierProvider(
+      create: (context) => MyIDWalletAppState(),
+      child: MaterialApp(
+        title: 'My ID Wallet',
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
+        ),
+        initialRoute: RoutesManager.homepageRoute,
+        onGenerateRoute: RoutesManager.generateRoute,
+      ),
     );
-  }
-
-  Future<void> initializeApplication() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    final cameras = await availableCameras();
-    MyIDWalletAppState.selectedCamera = cameras.first;
-    await DBManager.initializeDatabase();
   }
 
 }
 
 class MyIDWalletAppState extends ChangeNotifier {
   static late final CameraDescription selectedCamera;
+}
+
+Future<void> initializeApplication() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras();
+  MyIDWalletAppState.selectedCamera = cameras.first;
+  await DBManager.initializeDatabase();
 }

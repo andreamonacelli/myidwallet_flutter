@@ -31,6 +31,7 @@ dev_dependencies:
 
   flutter_lints: ^4.0.0
   flutter_launcher_icons: "^0.13.1"
+  flutter_native_splash: ^2.3.0
 
 flutter:
   uses-material-design: true
@@ -44,9 +45,20 @@ flutter:
         - asset: assets/fonts/Baloo2-Bold.ttf
           weight: 700
 
+# Configuring app's launcher icon
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   remove_alpha_ios: true
   image_path: "assets/icon/application_icon.png"
   min_sdk_android: 21
+
+# Configuring app's splash screen
+flutter_native_splash:
+  color: "#ffffff"
+  image: "assets/icon/application_icon.png"
+  android: true
+  android_gravity: center
+  ios: true
+  ios_content_mode: center
+  fullscreen: true
