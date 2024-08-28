@@ -29,22 +29,36 @@ class _DocumentGridState extends State<DocumentsGrid>{
         future: _initializeDocList(),
         builder: (context, snapshot) {
           if(snapshot.connectionState == ConnectionState.done){
-            return Expanded(
-                child: GridView.builder(
-                  physics: ScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(5, 2, 5, 0),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: (gridItemWidth) / (gridItemHeight),
-                      crossAxisSpacing: 2.5
-                  ),
-                  shrinkWrap: true,
-                  itemCount: _documentList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return DocumentPlaceholder(_documentList[index]);
-                  },
-                )
-            );
+            if(_documentList.isNotEmpty){
+              return Expanded(
+                  child: GridView.builder(
+                    physics: ScrollPhysics(),
+                    padding: EdgeInsets.fromLTRB(5, 2, 5, 0),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: (gridItemWidth) / (gridItemHeight),
+                        crossAxisSpacing: 2.5
+                    ),
+                    shrinkWrap: true,
+                    itemCount: _documentList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return DocumentPlaceholder(_documentList[index]);
+                    },
+                  )
+              );
+            } else {
+              return Align(
+                alignment: Alignment.center,
+                child: Text(
+                    "Al momento non ci sono documenti caricati nell'app",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey
+                    )
+                ),
+              );
+            }
           } else {
             return const Center(
                 child: CircularProgressIndicator()

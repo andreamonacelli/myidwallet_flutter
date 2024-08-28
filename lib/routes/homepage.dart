@@ -20,6 +20,17 @@ class HomePage extends StatelessWidget {
         body: Column(
           children: [
             HeaderTextCard("Benvenuto nel tuo wallet!", Colors.cyan, Colors.white70),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+              child: Text(
+                  "I tuoi documenti: ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87
+                  )
+              )
+            ),
             DocumentsGrid(),
           ],
         ),
