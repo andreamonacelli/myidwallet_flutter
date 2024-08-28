@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myidwallet_flutter/routes.dart';
 import 'package:myidwallet_flutter/widgets/homepage/documents_grid.dart';
 import 'package:myidwallet_flutter/widgets/header_text_card.dart';
@@ -12,6 +13,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
+      onPopInvoked: (bool invoked) {
+        SystemNavigator.pop();
+      },
       child: Scaffold(
         body: Column(
           children: [
