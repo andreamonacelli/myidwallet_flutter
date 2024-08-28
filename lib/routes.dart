@@ -4,12 +4,14 @@ import 'package:myidwallet_flutter/routes/document_capture_page.dart';
 import 'package:myidwallet_flutter/routes/doc_type_selection_page.dart';
 import 'package:myidwallet_flutter/routes/document_details_page.dart';
 import 'package:myidwallet_flutter/routes/homepage.dart';
+import 'package:myidwallet_flutter/routes/document_edit_page.dart';
 
 class RoutesManager {
   static const String homepageRoute = "/";
   static const String docTypeSelectionPageRoute = "/doctypeselection";
   static const String cameraScreenRoute = "/docscanner";
   static const String documentDetailsRoute = "/docdetails";
+  static const String documentEditPage = "/edit";
   static late String databaseOperation;
 
   RoutesManager._();
@@ -31,6 +33,10 @@ class RoutesManager {
       case documentDetailsRoute:
         return MaterialPageRoute(
             builder: (_) => const DocumentDetailsPage(),
+        );
+      case documentEditPage:
+        return MaterialPageRoute(
+            builder: (context) => DocumentEditPage(displayedDocument: DocumentDetailsPage.displayedDocument)
         );
       default:
         throw FormatException("Route not found!");

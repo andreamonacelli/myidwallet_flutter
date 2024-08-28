@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:myidwallet_flutter/widgets/camera_controller/check_image_page.dart';
+import 'package:myidwallet_flutter/routes/check_image_page.dart';
 import 'package:myidwallet_flutter/widgets/header_text_card.dart';
 
 class DocumentCapturePage extends StatefulWidget{
@@ -46,7 +46,10 @@ class DocumentCapturePageState extends State<DocumentCapturePage> {
           if(snapshot.connectionState == ConnectionState.done){
             return Stack(
               children: [
-                CameraPreview(_cameraController),
+                Align(
+                  alignment: Alignment.center,
+                  child: CameraPreview(_cameraController)
+                ),
                 HeaderTextCard("Scansiona il documento:", Colors.cyan, Colors.white70)
               ],
             );

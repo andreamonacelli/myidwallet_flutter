@@ -59,17 +59,19 @@ class _DocumentEditPageState extends State<DocumentEditPage> {
   }
 
   void _saveDocument() {
+    //Fetch data from the controllers and store it in the document entity
     widget.displayedDocument.documentHolderName = _documentHolderNameController.text;
     widget.displayedDocument.documentNation = _documentNationController.text;
-    widget.displayedDocument.dateOfIssue = DateFormat("dd/MM/yyyy").parse(_dateOfIssueController.text) ?? widget.displayedDocument.dateOfIssue;
-    widget.displayedDocument.expiryDate = DateFormat("dd/MM/yyyy").parse(_expiryDateController.text) ?? widget.displayedDocument.expiryDate;
+    widget.displayedDocument.dateOfIssue = DateFormat("dd/MM/yyyy").parse(_dateOfIssueController.text);
+    widget.displayedDocument.expiryDate = DateFormat("dd/MM/yyyy").parse(_expiryDateController.text);
     widget.displayedDocument.additionalData = {
       for (var entry in _additionalDataControllers.entries)
         entry.key: entry.value.text
     };
+    //Before actually storing the data, ask the user for confirmation, as done when deleting an entity
     showDialog<String>(
         context: context,
-        builder: (BuildContext buildContext) => ConfirmationDialog("update_doc", RoutesManager.homepageRoute)
+        builder: (BuildContext buildContext) => ConfirmationDialog("update_doc", RoutesManager.documentDetailsRoute)
     );
   }
 
@@ -133,7 +135,7 @@ class _DocumentEditPageState extends State<DocumentEditPage> {
                     ),
                   ),
                 );
-              }).toList(),
+              }),
             ],
           ),
         ),

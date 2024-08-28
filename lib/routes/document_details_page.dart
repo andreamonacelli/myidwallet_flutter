@@ -5,7 +5,7 @@ import 'package:myidwallet_flutter/routes.dart';
 import 'package:myidwallet_flutter/widgets/document_details_page/confirmation_dialog.dart';
 import 'package:myidwallet_flutter/widgets/document_details_page/document_info_list.dart';
 import 'package:myidwallet_flutter/widgets/document_details_page/document_name_type_banner.dart';
-import 'package:myidwallet_flutter/widgets/document_edit_page/document_edit_page.dart';
+import 'package:myidwallet_flutter/routes/document_edit_page.dart';
 
 class DocumentDetailsPage extends StatelessWidget {
 
@@ -16,53 +16,56 @@ class DocumentDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () async {
-                print("Edit document button pressed!");
-                /* Bring user to a similar page but where the fields are editable */
-                final editResult = await Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DocumentEditPage(displayedDocument: displayedDocument,) )
-                );
-              },
-              icon: Icon(Icons.edit)
-          ),
-          IconButton(
-              onPressed: () async {
-                print("Delete document button pressed!");
-                /* Ask user for confirmation then invoke the DB delete procedure */
-                showDialog<String>(
-                    context: context,
-                    builder: (BuildContext buildContext) => ConfirmationDialog("delete_doc", RoutesManager.homepageRoute)
-                );
-                //await DBManager.deleteDocument(displayedDocument.documentGUID);
-              },
-              icon: Icon(Icons.delete_rounded)
-          )
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            DocumentMainInfoBanner(displayedDocument),
-            Padding(
-              padding: EdgeInsets.fromLTRB(5, 2, 5, 0),
-              child: BarcodeWidget(
-                data: displayedDocument.uniqueCode,
-                barcode: Barcode.code128(),
-                height: MediaQuery.of(context).size.height / _aspectRatio,
-              ),
+    return PopScope(
+        canPop: false,
+        onPopInvoked: (bool invoked) {
+          /* Whenever a "pop" action occurs from the details page, redirect to homepage no matter what */
+          Navigator.of(context).pushNamed(RoutesManager.homepageRoute);
+        },
+        child: Scaffold(
+            appBar: AppBar(
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      print("Edit document button pressed!");
+                      /* Bring user to the edit document page */
+                      Navigator.of(context).pushNamed(RoutesManager.documentEditPage);
+                    },
+                    icon: Icon(Icons.edit)
+                ),
+                IconButton(
+                    onPressed: () async {
+                      print("Delete document button pressed!");
+                      /* Ask user for confirmation then invoke the DB delete procedure */
+                      showDialog<String>(
+                          context: context,
+                          builder: (BuildContext buildContext) => ConfirmationDialog("delete_doc", RoutesManager.homepageRoute)
+                      );
+                    },
+                    icon: Icon(Icons.delete_rounded)
+                )
+              ],
             ),
-            Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: DocumentTextInfoList(displayedDocument)
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  DocumentMainInfoBanner(displayedDocument),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(5, 2, 5, 0),
+                    child: BarcodeWidget(
+                      data: displayedDocument.uniqueCode,
+                      barcode: Barcode.code128(),
+                      height: MediaQuery.of(context).size.height / _aspectRatio,
+                    ),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: DocumentTextInfoList(displayedDocument)
+                  )
+                ],
+              ),
             )
-          ],
-        ),
-      )
+        )
     );
   }
 

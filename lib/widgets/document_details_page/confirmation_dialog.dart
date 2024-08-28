@@ -54,9 +54,6 @@ class ConfirmationDialog extends StatelessWidget {
         await DBManager.deleteDocument(DocumentDetailsPage.displayedDocument.documentGUID);
       case "update_doc":
         await DBManager.updateDocument(DocumentDetailsPage.displayedDocument);
-      case "implicit_update":
-        ///TODO: implement the implicit update feature
-        break;
       default: print("UNEXCPECTED ERROR!");
     }
   }
