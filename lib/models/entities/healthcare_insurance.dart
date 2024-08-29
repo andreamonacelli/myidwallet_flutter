@@ -44,7 +44,7 @@ class HealthcareInsurance implements DocumentType{
         continue;
       }
       if(numeroIdTesseraRegex.hasMatch(line.replaceAll(" ", ""))){
-        dataMap["Numero di identificazione della tessera"] = line;
+        dataMap["Numero di identificazione della tessera"] = line.replaceAll(" ", "");
       }
       else {
         try{

@@ -103,7 +103,6 @@ class CheckImagePage extends StatelessWidget{
                       ),
                     ),
                     onPressed: () async {
-                      ///TODO: Add the data processing snippet -> save it in the DB instantly
                       Document newDocument = Document(formController.text, DocTypeSelectionPage.selectedNation);
                       newDocument.documentTypeDescr = DocTypeSelectionPage.selectedType;
                       newDocument.documentType = newDocument.parseTypeFromDescription();
@@ -111,16 +110,36 @@ class CheckImagePage extends StatelessWidget{
                       newDocument.placeholderBGImage = DocTypeSelectionPage.placeholderBGImagePath;
                       Map<String, Object?>? recognizedData = await newDocument.documentType?.recognizeTextFromImage(_imagePath, newDocument.documentNation);
                       newDocument.additionalData = {};
-                      for(MapEntry<String, Object?> entry in recognizedData!.entries){
-                        switch(entry.key){
-                          case "Unique Code": newDocument.uniqueCode = entry.value.toString();
-                          case "Expiry Date": newDocument.expiryDate = DateFormat("dd/MM/yyyy").parse(entry.value.toString());
-                          default: newDocument.additionalData.addAll({entry.key: entry.value});
+                      if(recognizedData!.containsKey("Unique Code")){
+                        for(MapEntry<String, Object?> entry in recognizedData.entries){
+                          switch(entry.key){
+                            case "Unique Code": newDocument.uniqueCode = entry.value.toString();
+                            case "Expiry Date": newDocument.expiryDate = DateFormat("dd/MM/yyyy").parse(entry.value.toString());
+                            default: newDocument.additionalData.addAll({entry.key: entry.value});
+                          }
                         }
+                        newDocument.generateDocumentGUID();
+                        await DBManager.insertDocument(newDocument);
+                        Navigator.of(context).pushNamed(RoutesManager.homepageRoute);
+                      } else {
+                        /* an error while reading the unique code key has occurred, tell the user */
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text("ERRORE"),
+                              content: Text("Si è verificato un errore nella processazione dell'immagine fornita, ritentare la scansione"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    print("Confirmed reading");
+                                    Navigator.of(context).pushNamed(RoutesManager.homepageRoute);
+                                  },
+                                  child: const Text("OK")
+                                )
+                              ],
+                            )
+                        );
                       }
-                      newDocument.generateDocumentGUID();
-                      await DBManager.insertDocument(newDocument);
-                      Navigator.of(context).pushNamed(RoutesManager.homepageRoute);
                     },
                   )
                 )

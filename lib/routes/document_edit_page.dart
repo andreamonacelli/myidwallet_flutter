@@ -62,8 +62,16 @@ class _DocumentEditPageState extends State<DocumentEditPage> {
     //Fetch data from the controllers and store it in the document entity
     widget.displayedDocument.documentHolderName = _documentHolderNameController.text;
     widget.displayedDocument.documentNation = _documentNationController.text;
-    widget.displayedDocument.dateOfIssue = DateFormat("dd/MM/yyyy").parse(_dateOfIssueController.text);
-    widget.displayedDocument.expiryDate = DateFormat("dd/MM/yyyy").parse(_expiryDateController.text);
+    try {
+      widget.displayedDocument.dateOfIssue = DateFormat("dd/MM/yyyy").parse(_dateOfIssueController.text);
+    } catch (exception) {
+      widget.displayedDocument.dateOfIssue = null;
+    }
+    try {
+      widget.displayedDocument.expiryDate = DateFormat("dd/MM/yyyy").parse(_expiryDateController.text);
+    } catch (exception) {
+      widget.displayedDocument.expiryDate = null;
+    }
     widget.displayedDocument.additionalData = {
       for (var entry in _additionalDataControllers.entries)
         entry.key: entry.value.text
