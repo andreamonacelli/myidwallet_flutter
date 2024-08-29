@@ -28,7 +28,7 @@ class DocumentDetailsPage extends StatelessWidget {
                 IconButton(
                     onPressed: () {
                       print("Edit document button pressed!");
-                      /* Bring user to the edit document page */
+                      /* Redirect user to the edit document page */
                       Navigator.of(context).pushNamed(RoutesManager.documentEditPage);
                     },
                     icon: Icon(Icons.edit)
