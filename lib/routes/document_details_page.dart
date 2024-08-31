@@ -5,7 +5,6 @@ import 'package:myidwallet_flutter/routes.dart';
 import 'package:myidwallet_flutter/widgets/document_details_page/confirmation_dialog.dart';
 import 'package:myidwallet_flutter/widgets/document_details_page/document_info_list.dart';
 import 'package:myidwallet_flutter/widgets/document_details_page/document_name_type_banner.dart';
-import 'package:myidwallet_flutter/routes/document_edit_page.dart';
 
 class DocumentDetailsPage extends StatelessWidget {
 
