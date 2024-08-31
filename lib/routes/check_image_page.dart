@@ -102,44 +102,22 @@ class CheckImagePage extends StatelessWidget{
                           color: Colors.white70
                       ),
                     ),
-                    onPressed: () async {
-                      Document newDocument = Document(formController.text, DocTypeSelectionPage.selectedNation);
-                      newDocument.documentTypeDescr = DocTypeSelectionPage.selectedType;
-                      newDocument.documentType = newDocument.parseTypeFromDescription();
-                      //Document newDocument = Document.forTesting(formController.text, DocTypeSelectionPage.selectedNation);
-                      newDocument.placeholderBGImage = DocTypeSelectionPage.placeholderBGImagePath;
-                      Map<String, Object?>? recognizedData = await newDocument.documentType?.recognizeTextFromImage(_imagePath, newDocument.documentNation);
-                      newDocument.additionalData = {};
-                      if(recognizedData!.containsKey("Unique Code")){
-                        for(MapEntry<String, Object?> entry in recognizedData.entries){
-                          switch(entry.key){
-                            case "Unique Code": newDocument.uniqueCode = entry.value.toString();
-                            case "Expiry Date": newDocument.expiryDate = DateFormat("dd/MM/yyyy").parse(entry.value.toString());
-                            default: newDocument.additionalData.addAll({entry.key: entry.value});
-                          }
-                        }
-                        newDocument.generateDocumentGUID();
-                        await DBManager.insertDocument(newDocument);
-                        Navigator.of(context).pushNamed(RoutesManager.homepageRoute);
-                      } else {
-                        /* an error while reading the unique code key has occurred, tell the user */
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text("ERRORE"),
-                              content: Text("Si è verificato un errore nella processazione dell'immagine fornita, ritentare la scansione"),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    print("Confirmed reading");
-                                    Navigator.of(context).pushNamed(RoutesManager.homepageRoute);
-                                  },
-                                  child: const Text("OK")
-                                )
-                              ],
+                    onPressed: () {
+                      /* show loading screen that doesn't freeze the UI */
+                      showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  CircularProgressIndicator(),
+                                  Text("Processando le informazioni...")
+                                ],
+                              ),
                             )
-                        );
-                      }
+                          )
+                      );
+                      elaborateImage(context);
                     },
                   )
                 )
@@ -148,6 +126,46 @@ class CheckImagePage extends StatelessWidget{
         ],
       )
     );
+  }
+
+  void elaborateImage(BuildContext context) async {
+    Document newDocument = Document(formController.text, DocTypeSelectionPage.selectedNation);
+    newDocument.documentTypeDescr = DocTypeSelectionPage.selectedType;
+    newDocument.documentType = newDocument.parseTypeFromDescription();
+    newDocument.placeholderBGImage = DocTypeSelectionPage.placeholderBGImagePath;
+    newDocument.generateDocumentGUID();
+    newDocument.additionalData = {};
+    Map<String, Object?>? recognizedData = await newDocument.documentType?.recognizeTextFromImage(_imagePath, newDocument.documentNation);
+    if(recognizedData!.containsKey("Unique Code")){
+      for(MapEntry<String, Object?> entry in recognizedData.entries){
+        switch(entry.key){
+          case "Unique Code": newDocument.uniqueCode = entry.value.toString();
+          case "Expiry Date": newDocument.expiryDate = DateFormat("dd/MM/yyyy").parse(entry.value.toString());
+          default: newDocument.additionalData.addAll({entry.key: entry.value});
+        }
+      }
+      await DBManager.insertDocument(newDocument);
+      Navigator.of(context).pushNamed(RoutesManager.homepageRoute);
+    } else {
+      /* an error while reading the unique code key has occurred, tell the user */
+      Navigator.of(context).pop();
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("ERRORE"),
+            content: Text("Si è verificato un errore nella processazione dell'immagine fornita, ritentare la scansione"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  print("Confirmed reading");
+                  Navigator.of(context).pushNamed(RoutesManager.homepageRoute);
+                },
+                child: const Text("OK")
+              )
+            ],
+          )
+      );
+    }
   }
 
 }
