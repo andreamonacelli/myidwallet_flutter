@@ -23,7 +23,7 @@ class HealthcareInsurance implements DocumentType{
     RegExp numeroIdTesseraRegex = RegExp(r'\b\d{20}\b');
     List<String> lines = recognizedText.split('\n');
     for(String line in lines){
-      if(discardString(line)){
+      if(discardStringIT(line)){
         continue;
       }
       if(line.contains("SSN-MIN")){
@@ -79,7 +79,7 @@ class HealthcareInsurance implements DocumentType{
     return correctedCodiceFiscale;
   }
 
-  bool discardString(String string){
+  bool discardStringIT(String string){
     List<String> headers = ["3 Cognome", "4 Nome", "5 Data di nascita", "6 Numero identificazione personale", "7 Numero identificazione dell'istituzione", "8 Numero di identificazione della tessera", "9 Scadenza"];
     List<String> textToNotConsider = ["TESSERA EUROPEA DI ASSICURAZIONE MALATTIA", "IT"];
     if(headers.contains(string) || textToNotConsider.contains(string)){
